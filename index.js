@@ -10,8 +10,13 @@ const port = 4500;
 const server = http.createServer(app);
 const io = socketIO(server);
 
+
 // Define an object to store room data
 const rooms = {};
+app.get('/' , (req , res)=>{
+  console.log("got a req");
+  res.send(rooms);
+})
 
 io.on("connection", (socket) => {
   console.log("New Connection");
@@ -42,6 +47,18 @@ io.on("connection", (socket) => {
 
       // Join the user to a room with the specified ID
       socket.join(roomId);
+      if(rooms[roomId].users.length == 2){
+          io.to(roomId).emit("allusersdata", {
+            allusers : rooms[roomId].users,
+          });
+      }
+      socket.on("gameWinner"  , (data)=>{
+         const{winner , roomId} = data;
+         console.log(winner);
+         io.to(roomId).emit("winner" , {
+           winner: winner,
+         })
+      });
     } else {
       // The room is full
       socket.emit("roomFull", { user, roomId });
