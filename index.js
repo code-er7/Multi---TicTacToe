@@ -75,7 +75,12 @@ io.on("connection", (socket) => {
         break;
       }
     }
+    
   });
+socket.on("updateGame", (data) => {
+  const { roomId } = data;
+  socket.to(roomId).emit("updateGame", data);
+});
 });
 
 server.listen(port, () => {
