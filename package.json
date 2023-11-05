@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "backend application for tic-tac-toe",
   "main": "index.js",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "scripts": {
+    "start":"node index.js",
     "test": "test-start"
   },
   "keywords": [
@@ -12,7 +16,9 @@
   "author": "chetan rao",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
+    "http": "^0.0.1-security",
     "nodemon": "^3.0.1",
     "socket.io": "^4.7.2"
   }
